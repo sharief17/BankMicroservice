@@ -1,8 +1,0 @@
-package com.bank.debitcredit.service;
-
-import org.springframework.stereotype.Service;
-
-@Service
-public interface DebitCreditService {
-
-}

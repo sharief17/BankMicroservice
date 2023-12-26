@@ -1,7 +1,0 @@
-package com.bank.debitcredit.serviceImpl;
-
-import com.bank.debitcredit.service.DebitCreditService;
-
-public class DebitCreditServiceImpl implements DebitCreditService{
-
-}
