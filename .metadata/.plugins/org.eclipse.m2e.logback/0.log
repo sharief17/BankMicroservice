@@ -2143,3 +2143,4 @@ org.eclipse.core.runtime.CoreException: Could not resolve artifact org.webjars:s
 2023-12-26 21:38:36,864 [Worker-65: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\Practise\Banking application\TransferMoney\src\test\resources
 2023-12-26 21:38:56,452 [Worker-65: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 1 resource from src\main\resources to target\classes
 2023-12-26 21:38:56,461 [Worker-65: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 0 resource from src\main\resources to target\classes
+2023-12-26 21:38:56,465 [Worker-65: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\Practise\Banking application\TransferMoney\src\test\resources
