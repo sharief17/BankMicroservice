@@ -1,0 +1,5 @@
+package com.bank.transfer.repository;
+
+public interface TransferMoneyRepository {
+
+}

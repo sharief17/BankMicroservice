@@ -1,0 +1,28 @@
+package com.bank.debitcredit.serviceImpl;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.bank.debitcredit.entity.DebitCredit;
+import com.bank.debitcredit.repository.DebitCreditRepository;
+import com.bank.debitcredit.service.DebitCreditService;
+
+@Service
+public class DebitCreditServiceImpl implements DebitCreditService{
+
+	@Autowired
+	private DebitCreditRepository debitCreditRepository;
+	
+	@Override
+	public String debitMoney(DebitCredit transaction) {
+		debitCreditRepository.
+		return null;
+	}
+
+	@Override
+	public String creditMoney(DebitCredit transaction) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+}
