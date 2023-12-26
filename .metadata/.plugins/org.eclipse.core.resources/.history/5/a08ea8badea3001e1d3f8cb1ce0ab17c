@@ -1,8 +1,0 @@
-server.port=8082
-
-spring.datasource.url=jdbc:postgresql://localhost:5432/bank
-spring.datasource.password=Adesh@2205
-spring.datasource.username=postgres
-
-spring.jpa.show-sql=true
-spring.jpa.hibernate.ddl-auto=update
