@@ -39,7 +39,6 @@ public class CustomerServiceImpl implements CustomerService{
 
 	@Override
 	public String updateCustomer(Customer updatedCustomer) {
-		System.out.println("Inside update method");
 		Optional<Customer> customer = customerRepository.findById(updatedCustomer.getUserName());
 		if(customer.isPresent()) {
 			Customer existingCustomer = customer.get();

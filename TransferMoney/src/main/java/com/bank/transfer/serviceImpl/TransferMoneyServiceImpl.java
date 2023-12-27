@@ -2,12 +2,12 @@ package com.bank.transfer.serviceImpl;
 
 import java.util.UUID;
 
+import com.bank.transfer.externalService.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.bank.transfer.entity.Customer;
 import com.bank.transfer.entity.TransferMoney;
-import com.bank.transfer.repository.CustomerRepository;
 import com.bank.transfer.repository.TransferMoneyRepository;
 import com.bank.transfer.service.TransferMoneyService;
 
@@ -15,7 +15,7 @@ import com.bank.transfer.service.TransferMoneyService;
 public class TransferMoneyServiceImpl implements TransferMoneyService {
 
     @Autowired
-    private CustomerRepository customerRepository;
+    private CustomerService customerService;
 
     @Autowired
     private TransferMoneyRepository transferMoneyRepository;
@@ -27,16 +27,16 @@ public class TransferMoneyServiceImpl implements TransferMoneyService {
             return "Please add a valid amount";
         }
 
-        Customer tobeDebited = customerRepository.findByAccountNumber(transfer.getFromAccount());
-        Customer tobeCredited = customerRepository.findByAccountNumber(transfer.getToAccount());
+        Customer tobeDebited = customerService.getCustomerByAccountNumber(transfer.getFromAccount());
+        Customer tobeCredited = customerService.getCustomerByAccountNumber(transfer.getToAccount());
 
         if (tobeDebited != null && tobeCredited != null) {
             if (tobeDebited.getAmount() >= transfer.getAmount()) {
                 tobeDebited.setAmount(tobeDebited.getAmount() - transfer.getAmount());
                 tobeCredited.setAmount(tobeCredited.getAmount() + transfer.getAmount());
 
-                customerRepository.save(tobeCredited);
-                customerRepository.save(tobeDebited);
+                customerService.updateAndSaveCustomer(tobeCredited);
+                customerService.updateAndSaveCustomer(tobeDebited);
                 transferMoneyRepository.save(transfer);
 
                 return "Transaction Successful !!";
