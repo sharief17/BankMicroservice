@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,8 +15,9 @@ import com.bank.customer.service.CustomerService;
 import io.micrometer.common.util.StringUtils;
 
 @Service
+@Slf4j
 public class CustomerServiceImpl implements CustomerService{
-
+	
 	@Autowired
 	private CustomerRepository customerRepository;
 	
@@ -37,6 +39,7 @@ public class CustomerServiceImpl implements CustomerService{
 
 	@Override
 	public String updateCustomer(Customer updatedCustomer) {
+		System.out.println("Inside update method");
 		Optional<Customer> customer = customerRepository.findById(updatedCustomer.getUserName());
 		if(customer.isPresent()) {
 			Customer existingCustomer = customer.get();
@@ -58,12 +61,9 @@ public class CustomerServiceImpl implements CustomerService{
 			if(!StringUtils.isEmpty(updatedCustomer.getPassword())) {
 				existingCustomer.setPassword(updatedCustomer.getPassword());
 			}
-			// Role should not be changed , should it be ??
-//			if(!StringUtils.isEmpty(updatedCustomer.getRole())) {
-//				existingCustomer.setRole(updatedCustomer.getRole());
-//			}
-			
-			customerRepository.save(existingCustomer);
+			existingCustomer.setAmount(updatedCustomer.getAmount());
+
+			customerRepository.saveAndFlush(existingCustomer);
 			return "Customer details updated successfully !";
 		}
 		return "The given customer is not present, please create a new customer.";
@@ -88,21 +88,8 @@ public class CustomerServiceImpl implements CustomerService{
 	}
 
 	@Override
-	public void initAdminandCustomer() {
-		Customer admin = new Customer();
-		admin.setFirstName("Adesh");
-		admin.setLastName("Medhe");
-		admin.setAddress("Kolhapur, Maharashtra");
-		admin.setAccountNumber(UUID.randomUUID().toString());
-		admin.setAmount(0);
-		admin.setEmail("adeshmedhe0000@gmail.com");
-		admin.setMobile("7410718818");
-		admin.setPassword("Pass@123");
-		admin.setRole("admin");
-		admin.setUserName("Adesh_Medhe");
-		customerRepository.save(admin);
+	public Customer getByAccountNumber(String accountNumber) {
+		Customer customer = customerRepository.findByAccountNumber(accountNumber);
+		return customer;
 	}
-	
-	
-
 }

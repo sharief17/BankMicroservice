@@ -6,6 +6,6 @@ import org.springframework.stereotype.Repository;
 import com.bank.debitcredit.entity.DebitCredit;
 
 @Repository
-public interface DebitCreditRepository extends JpaRepository<DebitCredit, Integer> {
+public interface DebitCreditRepository extends JpaRepository<DebitCredit, String> {
 
 }

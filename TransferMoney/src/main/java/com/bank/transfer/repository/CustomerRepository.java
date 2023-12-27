@@ -6,8 +6,8 @@ import org.springframework.stereotype.Repository;
 import com.bank.transfer.entity.Customer;
 
 @Repository
-public interface CustomerRepository extends JpaRepository<Customer, String>{
-	
-	Customer findByAccountNumber(String accountNumber);
+public interface CustomerRepository extends JpaRepository<Customer, String> {
+
+    Customer findByAccountNumber(String accountNumber);
 
 }

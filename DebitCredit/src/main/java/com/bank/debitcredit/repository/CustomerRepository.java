@@ -7,8 +7,8 @@ import com.bank.debitcredit.entity.Customer;
 
 
 @Repository
-public interface CustomerRepository extends JpaRepository<Customer, String>{
-	
-	Customer findByAccountNumber(String accountNumber);
+public interface CustomerRepository extends JpaRepository<Customer, String> {
+
+    Customer findByAccountNumber(String accountNumber);
 
 }

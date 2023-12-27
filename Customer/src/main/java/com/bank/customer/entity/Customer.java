@@ -16,7 +16,7 @@ import lombok.Setter;
 import lombok.ToString;
 
 @Entity
-@Table(name = "customer", uniqueConstraints = { @UniqueConstraint(columnNames = { "userId", "accountNumber" }) })
+@Table(name = "customer", uniqueConstraints = {@UniqueConstraint(columnNames = {"userId", "accountNumber"})})
 @Getter
 @Setter
 @NoArgsConstructor
@@ -24,34 +24,31 @@ import lombok.ToString;
 @ToString
 public class Customer {
 
-	// see if this userId parameter is required, otherwise delete it
-//	private int userId;
+    private String firstName;
 
-	private String firstName;
+    private String lastName;
 
-	private String lastName;
+    @Id
+    private String userName;
 
-	@Id
-	private String userName;
+    private String accountNumber;
 
-	private String accountNumber;
+    private String email;
 
-	private String email;
+    private String mobile;
 
-	private String mobile;
+    private String address;
 
-	private String address;
+    private double amount;
 
-	private double amount;
+    @CreationTimestamp
+    private LocalDateTime createdAt;
 
-	@CreationTimestamp
-	private LocalDateTime createdAt;
+    @UpdateTimestamp
+    private LocalDateTime modifiedAt;
 
-	@UpdateTimestamp
-	private LocalDateTime modifiedAt;
+    private String password;
 
-	private String password;
-
-	private String role;
+    private String role;
 
 }
