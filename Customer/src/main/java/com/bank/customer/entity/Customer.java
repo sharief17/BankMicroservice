@@ -25,7 +25,7 @@ import lombok.ToString;
 public class Customer {
 
 	// see if this userId parameter is required, otherwise delete it
-	private int userId;
+//	private int userId;
 
 	private String firstName;
 

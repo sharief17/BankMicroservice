@@ -23,6 +23,7 @@ public class CustomerServiceImpl implements CustomerService{
 	public Customer createCustomer(Customer customer) {
 		customer.setAccountNumber(UUID.randomUUID().toString());
 		customer.setUserName(customer.getFirstName() + "_" + customer.getLastName());
+		customer.setRole("customer");
 		Customer createdCustomer = customerRepository.save(customer);
 		// perform any data hiding functions here and then send back the customer object
 		return createdCustomer;
@@ -57,9 +58,10 @@ public class CustomerServiceImpl implements CustomerService{
 			if(!StringUtils.isEmpty(updatedCustomer.getPassword())) {
 				existingCustomer.setPassword(updatedCustomer.getPassword());
 			}
-			if(!StringUtils.isEmpty(updatedCustomer.getRole())) {
-				existingCustomer.setRole(updatedCustomer.getRole());
-			}
+			// Role should not be changed , should it be ??
+//			if(!StringUtils.isEmpty(updatedCustomer.getRole())) {
+//				existingCustomer.setRole(updatedCustomer.getRole());
+//			}
 			
 			customerRepository.save(existingCustomer);
 			return "Customer details updated successfully !";
