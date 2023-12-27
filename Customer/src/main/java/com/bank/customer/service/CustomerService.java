@@ -17,4 +17,6 @@ public interface CustomerService {
 	Customer viewCustomer(String userName);
 	
 	List<Customer> viewAllCustomers();
+	
+	void initAdminandCustomer();
 }

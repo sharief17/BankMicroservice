@@ -18,12 +18,19 @@ import org.springframework.web.bind.annotation.RestController;
 import com.bank.customer.entity.Customer;
 import com.bank.customer.service.CustomerService;
 
+import jakarta.annotation.PostConstruct;
+
 @RestController
 @RequestMapping("/customer")
 public class CustomerController {
 
 	@Autowired
 	private CustomerService customerService;
+	
+	@PostConstruct
+	public void initDatabase() {
+		customerService.initAdminandCustomer();
+	}
 
 	@PostMapping("/create")
 	public ResponseEntity<Customer> createNewCustomer(@RequestBody Customer customer) {

@@ -86,6 +86,22 @@ public class CustomerServiceImpl implements CustomerService{
 		// extra activity
 		return allCustomers;
 	}
+
+	@Override
+	public void initAdminandCustomer() {
+		Customer admin = new Customer();
+		admin.setFirstName("Adesh");
+		admin.setLastName("Medhe");
+		admin.setAddress("Kolhapur, Maharashtra");
+		admin.setAccountNumber(UUID.randomUUID().toString());
+		admin.setAmount(0);
+		admin.setEmail("adeshmedhe0000@gmail.com");
+		admin.setMobile("7410718818");
+		admin.setPassword("Pass@123");
+		admin.setRole("admin");
+		admin.setUserName("Adesh_Medhe");
+		customerRepository.save(admin);
+	}
 	
 	
 
