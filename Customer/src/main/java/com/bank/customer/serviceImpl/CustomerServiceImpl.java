@@ -6,6 +6,7 @@ import java.util.UUID;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.bank.customer.entity.Customer;
@@ -20,12 +21,19 @@ public class CustomerServiceImpl implements CustomerService{
 	
 	@Autowired
 	private CustomerRepository customerRepository;
+
+	@Autowired
+	private PasswordEncoder passwordEncoder;
 	
 	@Override
 	public Customer createCustomer(Customer customer) {
 		customer.setAccountNumber(UUID.randomUUID().toString());
 		customer.setUserName(customer.getFirstName() + "_" + customer.getLastName());
 		customer.setRole("customer");
+
+		// Save the customers password using BcryptPasswordEncoder
+		// Bean already defined in the config file
+
 		Customer createdCustomer = customerRepository.save(customer);
 		// perform any data hiding functions here and then send back the customer object
 		return createdCustomer;
