@@ -17,86 +17,91 @@ import io.micrometer.common.util.StringUtils;
 
 @Service
 @Slf4j
-public class CustomerServiceImpl implements CustomerService{
-	
-	@Autowired
-	private CustomerRepository customerRepository;
+public class CustomerServiceImpl implements CustomerService {
 
-	@Autowired
-	private PasswordEncoder passwordEncoder;
-	
-	@Override
-	public Customer createCustomer(Customer customer) {
-		customer.setAccountNumber(UUID.randomUUID().toString());
-		customer.setUserName(customer.getFirstName() + "_" + customer.getLastName());
-		customer.setRole("customer");
+    @Autowired
+    private CustomerRepository customerRepository;
 
-		// Save the customers password using BcryptPasswordEncoder
-		// Bean already defined in the config file
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
-		Customer createdCustomer = customerRepository.save(customer);
-		// perform any data hiding functions here and then send back the customer object
-		return createdCustomer;
-	}
+    @Override
+    public Customer createCustomer(Customer customer) {
+        customer.setAccountNumber(UUID.randomUUID().toString());
+        customer.setUserName(customer.getFirstName() + "_" + customer.getLastName());
+        customer.setRole("customer");
 
-	@Override
-	public String deleteCustomer(String userName) {
-		customerRepository.deleteById(userName);
-		return "Customer deleted successfully";
-	}
+        // Save the customers password using BcryptPasswordEncoder
+        // Bean already defined in the config file
+        customer.setPassword(passwordEncoder.encode(customer.getPassword()));
 
-	@Override
-	public String updateCustomer(Customer updatedCustomer) {
-		Optional<Customer> customer = customerRepository.findById(updatedCustomer.getUserName());
-		if(customer.isPresent()) {
-			Customer existingCustomer = customer.get();
-			if(!StringUtils.isEmpty(updatedCustomer.getAddress())) {
-				existingCustomer.setAddress(updatedCustomer.getAddress());				
-			}
-			if(!StringUtils.isEmpty(updatedCustomer.getEmail())) {
-				existingCustomer.setEmail(updatedCustomer.getEmail());
-			}
-			if(!StringUtils.isEmpty(updatedCustomer.getFirstName())) {
-				existingCustomer.setFirstName(updatedCustomer.getFirstName());
-			}
-			if(!StringUtils.isEmpty(updatedCustomer.getLastName())) {
-				existingCustomer.setLastName(updatedCustomer.getLastName());
-			}
-			if(!StringUtils.isEmpty(updatedCustomer.getMobile())) {
-				existingCustomer.setMobile(updatedCustomer.getMobile());
-			}
-			if(!StringUtils.isEmpty(updatedCustomer.getPassword())) {
-				existingCustomer.setPassword(updatedCustomer.getPassword());
-			}
-			existingCustomer.setAmount(updatedCustomer.getAmount());
+        Customer createdCustomer = customerRepository.save(customer);
+        // perform any data hiding functions here and then send back the customer object
+        return createdCustomer;
+    }
 
-			customerRepository.saveAndFlush(existingCustomer);
-			return "Customer details updated successfully !";
-		}
-		return "The given customer is not present, please create a new customer.";
-	}
+    @Override
+    public String deleteCustomer(String userName) {
+        customerRepository.deleteById(userName);
+        return "Customer deleted successfully";
+    }
 
-	@Override
-	public Customer viewCustomer(String userName) {
-		Optional<Customer> customer = customerRepository.findById(userName);
-		// implement customer exception throwing if the customer is not present
-		// check it by using isPresent() method
-		// extra activity
-		// set the password to null and also hide sensitive information
-		return customer.get();
-	}
+    @Override
+    public String updateCustomer(Customer updatedCustomer) {
+        Optional<Customer> customer = customerRepository.findById(updatedCustomer.getUserName());
+        if (customer.isPresent()) {
+            Customer existingCustomer = customer.get();
+            if (!StringUtils.isEmpty(updatedCustomer.getAddress())) {
+                existingCustomer.setAddress(updatedCustomer.getAddress());
+            }
+            if (!StringUtils.isEmpty(updatedCustomer.getEmail())) {
+                existingCustomer.setEmail(updatedCustomer.getEmail());
+            }
+            if (!StringUtils.isEmpty(updatedCustomer.getFirstName())) {
+                existingCustomer.setFirstName(updatedCustomer.getFirstName());
+            }
+            if (!StringUtils.isEmpty(updatedCustomer.getLastName())) {
+                existingCustomer.setLastName(updatedCustomer.getLastName());
+            }
+            if (!StringUtils.isEmpty(updatedCustomer.getMobile())) {
+                existingCustomer.setMobile(updatedCustomer.getMobile());
+            }
+            if (!StringUtils.isEmpty(updatedCustomer.getPassword())) {
+                // We assume the user will enter the password as normal text
+                // We have to use the password encoder and encode the password before setting it
+                existingCustomer.setPassword(passwordEncoder.encode(updatedCustomer.getPassword()) );
+            }
+            if (updatedCustomer.getAmount() != null) {
+                existingCustomer.setAmount(updatedCustomer.getAmount());
+            }
 
-	@Override
-	public List<Customer> viewAllCustomers() {
-		List<Customer> allCustomers = customerRepository.findAll();
-		// set the password to null and also hide sensitive information
-		// extra activity
-		return allCustomers;
-	}
+            customerRepository.saveAndFlush(existingCustomer);
+            return "Customer details updated successfully !";
+        }
+        return "The given customer is not present, please create a new customer.";
+    }
 
-	@Override
-	public Customer getByAccountNumber(String accountNumber) {
-		Customer customer = customerRepository.findByAccountNumber(accountNumber);
-		return customer;
-	}
+    @Override
+    public Customer viewCustomer(String userName) {
+        Optional<Customer> customer = customerRepository.findById(userName);
+        // implement customer exception throwing if the customer is not present
+        // check it by using isPresent() method
+        // extra activity
+        // set the password to null and also hide sensitive information
+        return customer.get();
+    }
+
+    @Override
+    public List<Customer> viewAllCustomers() {
+        List<Customer> allCustomers = customerRepository.findAll();
+        // set the password to null and also hide sensitive information
+        // extra activity
+        return allCustomers;
+    }
+
+    @Override
+    public Customer getByAccountNumber(String accountNumber) {
+        Customer customer = customerRepository.findByAccountNumber(accountNumber);
+        return customer;
+    }
 }

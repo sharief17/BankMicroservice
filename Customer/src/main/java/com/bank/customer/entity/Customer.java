@@ -39,7 +39,7 @@ public class Customer {
 
     private String address;
 
-    private double amount;
+    private Double amount;
 
     @CreationTimestamp
     private LocalDateTime createdAt;
